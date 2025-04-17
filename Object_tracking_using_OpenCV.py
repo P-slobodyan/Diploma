@@ -10,7 +10,7 @@ if __name__ == '__main__' :
     scan_num = len(tracker_types)
 
     for number in range(2,6):
-        # Создание нового листа exsl таблицы
+        # Создание нового текстового файла
         log = open(f'Performance_test_crop_{number}.txt', 'w')
         log.write('\t\tFPS\tLOSS RATE\tLOSS TIME\tTrue/False\n')
 
@@ -147,12 +147,12 @@ if __name__ == '__main__' :
             out.release()
             cv2.destroyAllWindows()
             
-            # Добавление данных отслеживания в новый столбец таблицы
+            # Добавление данных отслеживания в новую строку таблицы
             log.write(str(tracker_type)+'\t')
             log.write(str((int)(fps0))+'\t'(int)(fps0))          
             log.write(str(LOSS_RATE)+'\t')     
             log.write(str(time_loss)+'\t')     
             log.write((str)(round(true_number/(i-1)*100, 2))+"/"+(str)(round(false_number/(i-1)*100, 2))+'\n')    
 
-    # Сохранение данных в таблицу Exsl
-    log.close()
+        # Сохранение данных в текстовый файл
+        log.close()
