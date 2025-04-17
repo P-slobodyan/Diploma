@@ -1,39 +1,27 @@
 import cv2
 import sys
-import xlwt
  
 (major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
  
 if __name__ == '__main__' :
  
     # Установка трекера
-    tracker_types = ['BOOSTING', 'MIL','MEDIANFLOW' ,'KCF', 'TLD', 'MOSSE', 'CSRT']
-    xw = xlwt.Workbook()
-    #number = 4
+    tracker_types = ['MEDIANFLOW' ,'KCF', 'MOSSE', 'CSRT']
+    scan_num = len(tracker_types)
 
     for number in range(2,6):
         # Создание нового листа exsl таблицы
-        sh = xw.add_sheet(f'crop_{number}')
-        # название параметров записываются в первый столбец
-        sh.write(1, 0, 'FPS')               # A1
-        sh.write(2, 0, 'LOSS RATE')         # A2
-        sh.write(3, 0, 'LOSS TIME')         # A3
-        sh.write(4, 0, 'True/False')        # A4
+        log = open(f'Performance_test_crop_{number}.txt', 'w')
+        log.write('\t\tFPS\tLOSS RATE\tLOSS TIME\tTrue/False\n')
 
-        for j in range(len(tracker_types)):
+        for j in range(scan_num):
             tracker_type = tracker_types[j]
             # Установка трекера
             if int(minor_ver) < 3:
                 tracker = cv2.Tracker_create(tracker_type)
             else:
-                if tracker_type == 'BOOSTING':
-                    tracker = cv2.legacy.TrackerBoosting_create()
-                elif tracker_type == 'MIL':
-                    tracker = cv2.TrackerMIL_create()
-                elif tracker_type == 'KCF':
+                if  tracker_type == 'KCF':
                     tracker = cv2.TrackerKCF_create()
-                elif tracker_type == 'TLD':
-                    tracker = cv2.legacy.TrackerTLD_create()
                 elif tracker_type == 'MEDIANFLOW':
                     tracker = cv2.legacy.TrackerMedianFlow_create()
                 elif tracker_type == 'MOSSE':
@@ -160,11 +148,11 @@ if __name__ == '__main__' :
             cv2.destroyAllWindows()
             
             # Добавление данных отслеживания в новый столбец таблицы
-            sh.write(0, j+1, tracker_type)
-            sh.write(1, j+1, (int)(fps0))          
-            sh.write(2, j+1, LOSS_RATE)     
-            sh.write(3, j+1, time_loss)     
-            sh.write(4, j+1, (str)(round(true_number/(i-1)*100, 2))+"/"+(str)(round(false_number/(i-1)*100, 2)))    
+            log.write(str(tracker_type)+'\t')
+            log.write(str((int)(fps0))+'\t'(int)(fps0))          
+            log.write(str(LOSS_RATE)+'\t')     
+            log.write(str(time_loss)+'\t')     
+            log.write((str)(round(true_number/(i-1)*100, 2))+"/"+(str)(round(false_number/(i-1)*100, 2))+'\n')    
 
     # Сохранение данных в таблицу Exsl
-    xw.save('Performance_test.xls')
+    log.close()
