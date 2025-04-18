@@ -33,7 +33,7 @@ if __name__ == '__main__' :
             # Установка доверительного трекера
             tracker_trust = cv2.TrackerCSRT_create()
             # Читать видео
-            video = cv2.VideoCapture(f"C:\\Users\\Petr Slobodyan\\Desktop\\LINKOS\\Programms\\crop_{number}.mp4")
+            video = cv2.VideoCapture(f"crop_{number}.mp4")
         
             # Выход, если видео не открыто
             if not video.isOpened():
@@ -67,7 +67,7 @@ if __name__ == '__main__' :
             true_number = 0             # Число совпадений с доверительным трекером
 
             #Настройка сохранения видео файла
-            fourcc = cv2.VideoWriter_fourcc(*'MP42')
+            fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
             out = cv2.VideoWriter(f'output_{number}_{tracker_type}.mp4', fourcc, 30.0, (1920, 1080))
 
             timer0 = cv2.getTickCount()
@@ -149,7 +149,7 @@ if __name__ == '__main__' :
             
             # Добавление данных отслеживания в новую строку таблицы
             log.write(str(tracker_type)+'\t')
-            log.write(str((int)(fps0))+'\t'(int)(fps0))          
+            log.write(str((int)(fps0))+'\t')          
             log.write(str(LOSS_RATE)+'\t')     
             log.write(str(time_loss)+'\t')     
             log.write((str)(round(true_number/(i-1)*100, 2))+"/"+(str)(round(false_number/(i-1)*100, 2))+'\n')    
