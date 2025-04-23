@@ -68,7 +68,7 @@ if __name__ == '__main__' :
 
             #Настройка сохранения видео файла
             fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
-            out = cv2.VideoWriter(f'output_{number}_{tracker_type}.mp4', fourcc, 30.0, (1920, 1080))
+            out = cv2.VideoWriter(f'output_{number}_{tracker_type}.mp4', fourcc, 30.0, (3840, 2160))
 
             timer0 = cv2.getTickCount()
         
